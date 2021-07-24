@@ -20,7 +20,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/edit_note"
-            android:theme="@style/Theme.MyApplication.NoActionBar">
+            android:theme="@style/Theme.MyApplication">
         </activity>
     </application>
 

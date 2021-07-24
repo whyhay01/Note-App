@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
+//        setSupportActionBar(findViewById(R.id.toolbar))
 
         //Implementing viewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -71,7 +71,16 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
+            R.id.action_next -> {
+                moveNext()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun moveNext() {
+        ++notePosition
+        displayNote()
     }
 }
