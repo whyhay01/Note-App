@@ -29,10 +29,14 @@ class NoteListActivity : AppCompatActivity() {
 
         //Intent with putExtra
         binding?.listView?.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-            var itemPosition = position
             val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("item_position", itemPosition)
+            intent.putExtra(NOTE_POSITION, position)
             startActivity(intent)
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (binding?.listView?.adapter as ArrayAdapter<NoteInfo>).notifyDataSetChanged()
     }
 }
