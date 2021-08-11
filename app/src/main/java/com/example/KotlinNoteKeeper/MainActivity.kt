@@ -8,9 +8,11 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
 import com.example.KotlinNoteKeeper.databinding.ActivityMainBinding as ActivityMainBinding
 
@@ -19,6 +21,8 @@ class MainActivity : AppCompatActivity() {
     private var notePosition:Int = POSITION_NOT_SET
 
     var binding: ActivityMainBinding? = null
+
+    private val Tag = this::class.simpleName
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,14 +37,14 @@ class MainActivity : AppCompatActivity() {
 
         //Populating a spinner
         val courses = ArrayList<CourseInfo>(DataManager.courses.values)
-        val adapterCourses = ArrayAdapter<CourseInfo>(this,
+        val adapterCourses = ArrayAdapter(this,
                 android.R.layout.simple_spinner_item,
         courses)
 
         adapterCourses.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding?.spinner?.adapter = adapterCourses
 
-        //SETTING UP EXTRAS
+        //SETTING UP EXTRAS and SavedInstances
         notePosition = savedInstanceState?.getInt(NOTE_POSITION, POSITION_NOT_SET) ?:
                 intent.getIntExtra(NOTE_POSITION, POSITION_NOT_SET)
 
@@ -58,6 +62,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun displayNote() {
+       if(notePosition > DataManager.notes.lastIndex){
+        showMessage("NOTE NOT FOUND")
+           return
+       }
+
         val note = DataManager.notes[notePosition]
         binding?.textNoteTitle?.setText(note.title)
         binding?.textNoteText?.setText(note.text)
@@ -65,6 +74,12 @@ class MainActivity : AppCompatActivity() {
         val coursePosition =DataManager.courses.values.indexOf(note.course)
         binding?.spinner?.setSelection(coursePosition)
 
+    }
+
+    private fun showMessage(message: String) {
+        val showContextView = findViewById<View>(R.id.view)
+        Snackbar.make(showContextView, message,Snackbar.LENGTH_LONG).show()
+        
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -80,8 +95,13 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             R.id.action_next -> {
-                saveNote()
-                moveNext()
+                if (notePosition < DataManager.notes.lastIndex) {
+                    saveNote()
+                    moveNext()
+                }else{
+                    val message = "No more notes"
+                    showMessage(message)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -95,13 +115,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if (notePosition>= DataManager.notes.lastIndex){
+        if (notePosition >= DataManager.notes.lastIndex){
             val menuItem = menu?.findItem(R.id.action_next)
             if (menuItem != null) {
                 menuItem?.icon = getDrawable(R.drawable.ic_block_white_24)
-                menuItem.isEnabled = false
-//                Toast.makeText(this,"End of List", Toast.LENGTH_SHORT).show()
             }
+//            menuItem?.isEnabled = false
         }
         return super.onPrepareOptionsMenu(menu)
     }

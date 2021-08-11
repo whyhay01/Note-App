@@ -12,6 +12,23 @@ object DataManager {
         initializeNotes()
     }
 
+    fun addNewNote(course: CourseInfo, noteTitle: String, noteText: String): Int{
+
+        val newNote = NoteInfo(course, noteTitle, noteText)
+        notes.add(newNote)
+        val notePosition = notes.lastIndex
+
+        return notePosition
+    }
+
+    fun searchNote(course: CourseInfo, noteText: String, noteTitle: String): NoteInfo?{
+        for (note in notes){
+            if (course == note.course && noteText == note.text && noteTitle == note.title)
+                return note
+        }
+        return null
+    }
+
     private fun initializeCourse(){
         var course = CourseInfo("android_intents", "Android Programming with Intent")
         courses.set("android_intents",course)
@@ -34,7 +51,7 @@ object DataManager {
             "Wow, intents allow components to be resolved at runtime")
         notes.add(note)
         note = NoteInfo(course, "Delegating intents",
-            "PendingIntents are powerful; they delegate much more than just a component invocation")
+            "Pending Intents are powerful; they delegate much more than just a component invocation")
         notes.add(note)
 
         course = courses["android_async"]!!

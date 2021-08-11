@@ -25,7 +25,8 @@ class NoteListActivity : AppCompatActivity() {
         })
 
         //populating the listview
-        binding?.listView?.adapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,DataManager.notes)
+        val listViewAdapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,DataManager.notes)
+        binding?.listView?.adapter = listViewAdapter
 
         //Intent with putExtra
         binding?.listView?.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
