@@ -1,26 +1,19 @@
 package com.example.KotlinNoteKeeper
 
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.service.voice.VoiceInteractionSession
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.view.accessibility.AccessibilityEventCompat.setAction
-import com.example.KotlinNoteKeeper.databinding.ActivityMainBinding as ActivityMainBinding
+import com.example.KotlinNoteKeeper.databinding.ActivityNoteBinding
 
-class MainActivity : AppCompatActivity() {
+class NoteActivity : AppCompatActivity() {
 
     private var notePosition:Int = POSITION_NOT_SET
 
-    var binding: ActivityMainBinding? = null
+    var binding: ActivityNoteBinding? = null
 
     private val Tag = this::class.simpleName
 
@@ -28,10 +21,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_note)
 
         //Implementing viewBinding
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityNoteBinding.inflate(layoutInflater)
         val view = binding?.root
         setContentView(view)
 

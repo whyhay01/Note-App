@@ -1,11 +1,17 @@
 package com.example.KotlinNoteKeeper
 
 import android.content.Intent
+import android.icu.lang.UCharacter
+import android.icu.lang.UCharacter.VerticalOrientation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.HorizontalScrollView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.KotlinNoteKeeper.databinding.ActivityNoteListBinding
 
 class NoteListActivity : AppCompatActivity() {
@@ -20,24 +26,23 @@ class NoteListActivity : AppCompatActivity() {
 
         //implementing Fab
         binding?.fab?.setOnClickListener(View.OnClickListener {
-            val fabIntent = Intent(this, MainActivity::class.java)
+            val fabIntent = Intent(this, NoteActivity::class.java)
             startActivity(fabIntent)
         })
 
-        //populating the listview
-        val listViewAdapter = ArrayAdapter(this,android.R.layout.simple_list_item_1,DataManager.notes)
-        binding?.listView?.adapter = listViewAdapter
+        //Specifying RecyclerView LayoutManager
+        val displayLayout = LinearLayoutManager(this)
+//        val gridLayout = GridLayoutManager(this, 3)
+        binding?.listItems?.layoutManager = displayLayout
 
-        //Intent with putExtra
-        binding?.listView?.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra(NOTE_POSITION, position)
-            startActivity(intent)
-        })
+        //Setting up NoteListAdapter on the recyclerView
+        val recyclerViewAdapter = NoteListAdapter(this, DataManager.notes)
+        binding?.listItems?.adapter = recyclerViewAdapter
+
     }
 
     override fun onResume() {
         super.onResume()
-        (binding?.listView?.adapter as ArrayAdapter<NoteInfo>).notifyDataSetChanged()
+        binding?.listItems?.adapter?.notifyDataSetChanged()
     }
 }

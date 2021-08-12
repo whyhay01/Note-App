@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".NoteActivity"
             android:label="@string/edit_note"
             android:theme="@style/Theme.MyApplication">
         </activity>
