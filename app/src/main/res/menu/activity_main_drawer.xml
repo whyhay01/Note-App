@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/id_note_fragment"
+            android:icon="@drawable/ic_baseline_notes_24"
+            android:title="@string/menu_notes" />
+        <item
+            android:id="@+id/id_course_fragment"
+            android:icon="@drawable/ic_baseline_notes_24"
+            android:title="@string/menu_courses" />
+
+    </group>
+
+        <item android:title="Communication" >
+            <menu>
+
+            <item
+                android:id="@+id/id_share_fragment"
+                android:icon="@drawable/ic_baseline_share_24"
+                android:checkable = "true"
+                android:title="Share" />
+
+            <item android:id="@+id/id_send_fragment"
+                android:icon="@drawable/ic_baseline_send_24"
+                android:checkable = "true"
+                android:title="Send"/>
+        </menu>
+        </item>
+
+    <item android:title="Profile" >
+        <menu>
+
+            <item
+                android:id="@+id/id_logout_fragment"
+                android:icon="@drawable/ic_baseline_logout_24"
+                android:checkable = "true"
+                android:title="logout" />
+
+
+        </menu>
+    </item>
+
+</menu>
